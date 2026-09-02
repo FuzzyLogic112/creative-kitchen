@@ -2,6 +2,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 import type { Recipe } from '../lib/types';
 import { ingredientMatches, CATEGORY_LABELS } from '../lib/matcher';
 import { fetchDishImage } from '../lib/ai';
+import { toggleFav, isFav, libFavKey } from '../lib/favorites';
+import { HeartButton } from './HeartButton';
 
 // recipes.json 全量 1.4MB，只在首次打开详情时拉取，之后缓存复用。
 let cache: Recipe[] | null = null;
@@ -24,6 +26,7 @@ export function RecipeDetail({ id, have, onClose, onRemix }: Props) {
   const [error, setError] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [imgState, setImgState] = useState<'loading' | 'ready' | 'failed'>('loading');
+  const [fav, setFav] = useState(() => isFav(libFavKey(id)));
 
   useEffect(() => {
     let alive = true;
@@ -48,10 +51,13 @@ export function RecipeDetail({ id, have, onClose, onRemix }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-bg">
-      <header className="flex items-center gap-2 border-b border-sep bg-card/80 px-3 py-3 backdrop-blur-xl pt-safe">
+      <header className="flex items-center justify-between gap-2 border-b border-sep bg-card/80 px-3 py-3 backdrop-blur-xl pt-safe">
         <button onClick={onClose} className="press flex items-center text-[17px] text-accent">
           <span className="text-[24px] leading-none">‹</span>返回
         </button>
+        {recipe && (
+          <HeartButton active={fav} onClick={() => setFav(toggleFav({ key: libFavKey(id), type: 'library', name: recipe.name, libId: id }))} />
+        )}
       </header>
 
       <div className="flex-1 overflow-y-auto px-4 py-5 pb-safe">

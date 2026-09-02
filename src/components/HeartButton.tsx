@@ -1,0 +1,16 @@
+export function HeartButton({ active, onClick }: { active: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={active ? '取消收藏' : '收藏'}
+      className="press flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24"
+        fill={active ? 'var(--color-accent)' : 'none'}
+        stroke={active ? 'var(--color-accent)' : 'var(--color-label2)'}
+        strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      </svg>
+    </button>
+  );
+}

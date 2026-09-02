@@ -1,5 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { generateRecipes, fetchDishImage, type GeneratedRecipe, type SuggestRequest } from '../lib/ai';
+import { toggleFav, isFav, aiFavKey } from '../lib/favorites';
+import { HeartButton } from './HeartButton';
 
 export function GeneratedRecipeView({ request, onClose }: { request: SuggestRequest; onClose: () => void }) {
   const [recipes, setRecipes] = useState<GeneratedRecipe[] | null>(null);
@@ -66,16 +68,17 @@ export function GeneratedRecipeView({ request, onClose }: { request: SuggestRequ
             </div>
           )}
 
-          {recipes && selected !== null && <RecipeDetailView recipe={recipes[selected]} />}
+          {recipes && selected !== null && <AiRecipeDetail recipe={recipes[selected]} />}
         </div>
       </div>
     </div>
   );
 }
 
-function RecipeDetailView({ recipe }: { recipe: GeneratedRecipe }) {
+export function AiRecipeDetail({ recipe }: { recipe: GeneratedRecipe }) {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [imgState, setImgState] = useState<'loading' | 'ready' | 'failed'>('loading');
+  const [fav, setFav] = useState(() => isFav(aiFavKey(recipe.name)));
 
   useEffect(() => {
     let alive = true;
@@ -102,7 +105,10 @@ function RecipeDetailView({ recipe }: { recipe: GeneratedRecipe }) {
           )}
         </div>
       )}
-      <h1 className="text-[28px] font-bold tracking-tight text-label">{recipe.name}</h1>
+      <div className="flex items-start justify-between gap-3">
+        <h1 className="text-[28px] font-bold tracking-tight text-label">{recipe.name}</h1>
+        <HeartButton active={fav} onClick={() => setFav(toggleFav({ key: aiFavKey(recipe.name), type: 'ai', name: recipe.name, ai: recipe }))} />
+      </div>
       <div className="mt-1.5 text-[13px] text-label2">难度 {'★'.repeat(Math.max(1, Math.min(5, recipe.difficulty)))} · 约 {recipe.timeMinutes} 分钟</div>
       <p className="mt-3 text-[15px] leading-relaxed text-label2">{recipe.intro}</p>
 

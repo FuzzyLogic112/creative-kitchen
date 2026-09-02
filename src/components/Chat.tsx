@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { chat, type ChatMessage } from '../lib/ai';
 
 const SYSTEM: ChatMessage = {
@@ -50,10 +51,16 @@ export function Chat({ onClose, onOpenSettings }: { onClose: () => void; onOpenS
           {messages.filter((m) => m.role !== 'system').map((m, i) => (
             <div key={i} className={'flex ' + (m.role === 'user' ? 'justify-end' : 'justify-start')}>
               <div className={
-                'max-w-[80%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-[15px] leading-relaxed ' +
+                'max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[15px] leading-relaxed ' +
                 (m.role === 'user' ? 'bg-accent text-white' : 'bg-card text-label shadow-[0_1px_2px_rgba(0,0,0,0.04)]')
               }>
-                {m.content}
+                {m.role === 'assistant' ? (
+                  <div className="[&>*:first-child]:mt-0 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mt-0.5 [&_p]:mt-2 [&_strong]:font-semibold [&_h1]:mt-2 [&_h1]:font-bold [&_h2]:mt-2 [&_h2]:font-bold [&_h3]:mt-2 [&_h3]:font-semibold [&_code]:rounded [&_code]:bg-bg [&_code]:px-1 [&_code]:text-[13px]">
+                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <span className="whitespace-pre-wrap">{m.content}</span>
+                )}
               </div>
             </div>
           ))}
