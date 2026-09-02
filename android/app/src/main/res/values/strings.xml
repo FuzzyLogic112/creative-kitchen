@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">创意厨房</string>
+    <string name="title_activity_main">创意厨房</string>
+    <string name="package_name">com.creativekitchen.app</string>
+    <string name="custom_url_scheme">com.creativekitchen.app</string>
+</resources>

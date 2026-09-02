@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+.howtocook/
+
+# 生成的前端数据副本（源在 data/，构建时重建）
+public/recipes.json
+
+# Vercel
+.vercel

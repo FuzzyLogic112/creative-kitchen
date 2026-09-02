@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* iOS 系统色板（对齐 Apple Human Interface 的语义色） */
+@theme {
+  --color-bg: #f2f2f7;          /* systemGroupedBackground */
+  --color-card: #ffffff;
+  --color-sep: #e5e5ea;         /* separator */
+  --color-label: #1c1c1e;       /* label */
+  --color-label2: #8e8e93;      /* secondaryLabel */
+  --color-label3: #c7c7cc;      /* tertiaryLabel */
+  --color-accent: #ff8c1a;      /* systemOrange 偏暖，贴合美食 */
+  --color-accent-soft: #fff4e6;
+  --color-green: #34c759;       /* systemGreen */
+  --color-green-soft: #e8f8ec;
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-label);
+  letter-spacing: -0.01em;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* iOS 安全区 */
+.pb-safe { padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+.pt-safe { padding-top: env(safe-area-inset-top); }
+
+/* 轻按压反馈，替代粗重的 hover */
+.press { transition: transform 0.12s ease, opacity 0.12s ease; }
+.press:active { transform: scale(0.97); opacity: 0.85; }
