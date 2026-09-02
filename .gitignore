@@ -15,3 +15,7 @@ apk-output/
 
 # 本地会话/工具笔记，不进仓库
 .claude/
+
+# 临时脚本与本地 APK 下载
+_*.cjs
+apk-output/
