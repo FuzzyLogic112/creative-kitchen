@@ -9,3 +9,9 @@ public/recipes.json
 
 # Vercel
 .vercel
+
+# APK 下载产物
+apk-output/
+
+# 本地会话/工具笔记，不进仓库
+.claude/
